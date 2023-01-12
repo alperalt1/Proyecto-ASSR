@@ -7,6 +7,13 @@
   
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id]{
+  scroll-margin-top: 70px;
+}
 
 :root {
   --instagram: #e4405f;
@@ -23,6 +30,7 @@ nav{
   height: 80px;
   width: 100%;
   z-index: 100%;
+  z-index: 3;
 }
 
 label.logo{
@@ -48,7 +56,7 @@ nav ul li{
   margin: 0 5px;
 }
 
-nav ul li a{
+nav ul li .navbar{
   color: white;
   font-size: 17px;
   padding: 7px 13px;
@@ -56,7 +64,7 @@ nav ul li a{
   text-transform: uppercase;
 }
 
-a:hover{
+.navbar:hover{
   background: #ee5050;
   transition: .5s;
 }
@@ -80,7 +88,7 @@ a:hover{
     font-size: 30px;
     padding-left: 50px;
   }
-  nav ul li a{
+  nav ul li .navbar{
     font-size: 16px;
   }
 }
@@ -104,10 +112,10 @@ a:hover{
     margin: 50px 0;
     line-height: 30px;
   }
-  nav ul li a{
+  nav ul li .navbar{
     font-size: 20px;
   }
-  a:hover{
+  .navbar:hover{
     background: none;
     color: #ee5050;
   }
@@ -173,6 +181,8 @@ header {
 img {
   width: 100%; /* need to overwrite inline dimensions */
   height: 450px;
+  z-index: 1;
+
 }
 
 h2 {
@@ -184,6 +194,7 @@ h2 {
   grid-template-columns: 300px 300px;
   grid-gap: 1em;
   justify-content: center;
+  z-index: 1;
   
 }
 
@@ -292,44 +303,34 @@ hr {
 
 .redes-container {
   display: flex;
-  height: 100vh;
-  align-items: center;
+  
+  height: 520px;
   justify-content: center;
+  align-items: center;
+  
 }
 
-.redes-container ul li {
-  display: inline-block;
-  margin: 0 5px;
-  width: 50px;
-  height: 50px;
-  text-align: center;
+
+.link_cont {
+  text-decoration: none
+  height: 100px;
+  width: 130px;
+  margin: 20px 20px 20px 20px;
 }
 
-.redes-containerul li a {
-  display: block;
-  padding: 0 10px;
-  background: #333;
-  color: #fff;
-  line-height: 50px;
-  font-size: 10px;
-  box-shadow: 0 3px 5px 0px rgba(0,0,0,.2);
-  transform: .2s;
+.link_cont:hover {
+  color: white;
 }
 
-.redes-container ul:hover a {
-  filter: blur(2px);
+.img_Contact {
+  
+  height: 100px;
+  width: 100px;
+  margin: 20px 20px 20px 20px;
 }
 
-.redes-container ul li a:hover {
-  transform: translatev(-3px) scale(1.05);
-  box-shadow: 0 5px 5px 0px rgba(0, 0, 0, .4);
-  filter: none;
-}
-
-.redes-container ul li .instagram:hover{
-  background-color: var(--instagram);
-}
-
-.redes-container ul li .whatsapp:hover{
-  background-color: var(--whatsapp);
+.title-section3 {
+  padding: 60px 20px 10px 101px;
+  color: #ee5050;
+  font-size: 35px;
 }
