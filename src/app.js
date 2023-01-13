@@ -2,9 +2,21 @@ const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
 const login = require('./routers/login_router.js');
 const sesion = require('./routers/sesion_router.js');
+const expressLayouts = require('express-ejs-layouts');
+const path = require('path');
+const fs = require('fs');
+const ejs = require('ejs');
+
 const app = express();
 require('dotenv').config()
 
+const PORT = process.env.PORT || 3000;
+
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
+app.use(express.static(__dirname + '/public'));
 
 const config = {
     authRequired: false,
@@ -19,12 +31,7 @@ app.use(auth(config));
 app.use(login);
 app.use(sesion);
 
-// The /profile route will show the user profile as JSON
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
-});
-
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log('Listening on http://localhost:3000');
 });
 
