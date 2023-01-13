@@ -1,7 +1,8 @@
 const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
-const login = require('./routers/login_router.js');
-const sesion = require('./routers/sesion_router.js');
+const login = require('./src/routers/login_router.js');
+const sesion = require('./src/routers/sesion_router.js');
+//const inicio = require('./src/routers/inicio_router.js');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const fs = require('fs');
@@ -12,11 +13,28 @@ require('dotenv').config()
 
 const PORT = process.env.PORT || 3000;
 
+
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname+'/views'));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname+'/public')));
+
+app.get('/', (req, res) => {
+
+  
+
+  let files = fs.readdirSync(path.join(__dirname+'/public/Img'));
+
+  res.render('layout.ejs', {
+    pageTitle: 'Home',
+    images: files,
+    
+  })
+})
+
+
+//app.use(inicio);
 
 const config = {
     authRequired: false,

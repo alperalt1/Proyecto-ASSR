@@ -1,7 +1,11 @@
+const fs = require('fs');
+const ejs = require('ejs');
+const path = require('path');
+
 module.exports = (req, res) => {
-    let files = fs.readdirSync(__dirname+'/public/Img')
+    let files = fs.readdirSync('./public/Img')
     res.render('index', {
-      pageTitle: 'Home',
-      images: files,
-      slideInfo: slideInfo
-}
+      pageTitle: 'Hosicorp Mariscos',
+      images: files
+    });
+}    
