@@ -1,7 +1,10 @@
 const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
+const login = require('./routers/login_router.js');
+const sesion = require('./routers/sesion_router.js');
 const app = express();
 require('dotenv').config()
+
 
 const config = {
     authRequired: false,
@@ -10,16 +13,11 @@ const config = {
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: process.env.ISSUER_BASE_URL,
     secret: process.env.SECRET,
-  };
+};
   
 app.use(auth(config));
-
-// req.oidc.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  res.send(
-    req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
-  )
-});
+app.use(login);
+app.use(sesion);
 
 // The /profile route will show the user profile as JSON
 app.get('/profile', requiresAuth(), (req, res) => {
