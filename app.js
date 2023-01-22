@@ -63,7 +63,7 @@ app.post('/login/registro', async (req, res)=>{
 	let passwordHash = await bcryptjs.hash(pass, 8);  
   var sql = `INSERT INTO user 
   (first_name, last_name, user_name, email, pass) 
-  VALUES ("${nombre}", "${apellido}", "${usuario}", "${correo}", "${pass}")`;
+  VALUES ("${nombre}", "${apellido}", "${usuario}", "${correo}", "${passwordHash}")`;
   connection.query(sql,function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
