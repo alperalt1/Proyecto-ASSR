@@ -1,25 +1,27 @@
+//dependencias
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const path = require('path');
-const fs = require('fs');
 const ejs = require('ejs');
-
-//bycrypt.js
+const mysql = require('mysql2')
 const bcryptjs = require('bcryptjs');
 
-//const { auth, requiresAuth } = require('express-openid-connect');
-//const sesion = require('./src/routers/sesion_router.js');
-
-
+//exportar routers
+//routers views
 const inicio = require('./src/routers/inicio_router.js');
 const login = require('./src/routers/login_router.js');
 const registro = require('./src/routers/registro_router.js');
 const sesion = require('./src/routers/sesion_router.js');
+const connection = require('./db/database');
+
+//routers registro de usuario
+const registropost = require('./src/routers/registropost_router.js');
+const loginpost = require('./src/routers/loginpost_router.js');
 
 const app = express();
+//puerto
 const PORT = process.env.PORT || 3000;
-require('dotenv').config()
-const mysql = require('mysql2')
+
+
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
@@ -27,7 +29,6 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(express.static('public'));
-
 
 
 const session = require('express-session');
@@ -38,39 +39,16 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-//config planetscale mysql
-
-const connection = mysql.createConnection(process.env.DATABASE_URL)
-console.log('Connected to PlanetScale!')
-
-
-// var sql = "INSERT INTO user (first_name, last_name, user_name, email, pass) VALUES ('alsx', 'pdsalta', 'alp', 'alt@gmail.com', 'zzz')";
-// connection.query(sql);
-//routes
-
+//rutas
 //get
 app.use(inicio);
 app.use(login);
 app.use(registro);
 app.use(sesion);
 
-app.post('/login/registro', async (req, res)=>{
-	const nombre = req.body.nombre;
-  const apellido = req.body.apellido;
-  const usuario = req.body.usuario;
-  const correo = req.body.correo;
-  const pass = req.body.pass;
-	let passwordHash = await bcryptjs.hash(pass, 8);  
-  var sql = `INSERT INTO user 
-  (first_name, last_name, user_name, email, pass) 
-  VALUES ("${nombre}", "${apellido}", "${usuario}", "${correo}", "${passwordHash}")`;
-  connection.query(sql,function (err, result) {
-    if (err) throw err;
-    console.log("1 record inserted");
-    res.redirect('/');
-  });
-})
-
+//post
+app.use(registropost);
+app.use(loginpost);
 
 app.listen(PORT, function() {
   console.log('Listening on http://localhost:3000');
