@@ -11,6 +11,8 @@ const inicio = require('./src/routers/inicio_router.js');
 const login = require('./src/routers/login_router.js');
 const registro = require('./src/routers/registro_router.js');
 const sesion = require('./src/routers/sesion_router.js');
+const logout = require('./src/routers/logout_router.js');
+const perfil = require('./src/routers/perfil_router.js');
 const connection = require('./db/database');
 
 //routers registro de usuario
@@ -45,10 +47,21 @@ app.use(inicio);
 app.use(login);
 app.use(registro);
 app.use(sesion);
-
+app.use(logout);
+app.use(perfil);
 //post
 app.use(registropost);
 app.use(loginpost);
+
+
+//función para limpiar la caché luego del logout
+app.use(function(req, res, next) {
+    if (!req.user_name)
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next();
+});
+
+
 
 app.listen(PORT, function() {
   console.log('Listening on http://localhost:3000');
